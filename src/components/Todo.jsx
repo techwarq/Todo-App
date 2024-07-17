@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Todo = () => {
   const [newTodo, setNewTodo] = useState('');
   const [myData, setMyData] = useState([]);
-  const [filter, setFilter] = useState('all'); // Define filter state
+  const [filter, setFilter] = useState('all'); 
 
   useEffect(() => {
     axios.get('//dummyjson.com/todos?limit=5&skip=10')
