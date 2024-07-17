@@ -4,17 +4,16 @@ import PropTypes from 'prop-types';
 import { Trash2, Pencil } from 'lucide-react';
 import { useState } from 'react';
 import Edit from './Edit';
+ // Ensure this is imported for CSS styles
 
-const TodoList = ({ myData, setMyData }) => {
+const TodoList = ({ myData, setMyData, filter }) => {
   const [editTodoId, setEditTodoId] = useState(null);
   const [newTodo, setNewTodo] = useState('');
 
   const handleDelete = (id) => {
-    
     const todoToDelete = myData.find(todo => todo.id === id);
     
     if (todoToDelete && typeof todoToDelete.id === 'number') {
-      
       axios.delete(`https://dummyjson.com/todos/${id}`)
         .then(() => {
           const updatedTodos = myData.filter(todo => todo.id !== id);
@@ -27,7 +26,6 @@ const TodoList = ({ myData, setMyData }) => {
           setMyData(updatedTodos);
         });
     } else {
-      
       const updatedTodos = myData.filter(todo => todo.id !== id);
       setMyData(updatedTodos);
     }
@@ -65,7 +63,6 @@ const TodoList = ({ myData, setMyData }) => {
     );
     setMyData(updatedTodos);
 
-    // Update the completed status on the server
     const todoToUpdate = updatedTodos.find(todo => todo.id === id);
     axios.put(`https://dummyjson.com/todos/${id}`, {
       completed: todoToUpdate.completed
@@ -78,10 +75,16 @@ const TodoList = ({ myData, setMyData }) => {
       });
   };
 
+  const filteredData = myData.filter(todo => {
+    if (filter === 'completed') return todo.completed;
+    if (filter === 'incomplete') return !todo.completed;
+    return true;
+  });
+
   return (
     <div className="flex items-center my-3 gap-2">
       <List unstyled>
-        {myData.slice(0, 6).map(post => (
+        {filteredData.slice(0, 6).map(post => (
           <List.Item key={post.id} className="flex items-center justify-between">
             {editTodoId === post.id ? (
               <Edit newTodo={newTodo} setNewTodo={setNewTodo} addTodo={handleUpdate} />
@@ -118,7 +121,8 @@ const TodoList = ({ myData, setMyData }) => {
 
 TodoList.propTypes = {
   myData: PropTypes.array.isRequired,
-  setMyData: PropTypes.func.isRequired
+  setMyData: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired 
 };
 
 export default TodoList;
