@@ -3,6 +3,7 @@ import { Button, TextInput } from 'flowbite-react';
 import { CalendarCheck } from 'lucide-react';
 import TodoList from './TodoList';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const Todo = () => {
   const [newTodo, setNewTodo] = useState('');
@@ -23,6 +24,7 @@ const Todo = () => {
     if (newTodo.trim() === '') return;
 
     axios.post('https://dummyjson.com/todos/add', {
+     id: uuidv4(),
       todo: newTodo,
       completed: false,
       userId: 5

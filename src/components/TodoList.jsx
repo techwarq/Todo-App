@@ -10,14 +10,27 @@ const TodoList = ({ myData, setMyData }) => {
   const [newTodo, setNewTodo] = useState('');
 
   const handleDelete = (id) => {
-    axios.delete(`https://dummyjson.com/todos/${id}`)
-      .then(() => {
-        const updatedTodos = myData.filter(todo => todo.id !== id);
-        setMyData(updatedTodos);
-      })
-      .catch(error => {
-        console.error('Error deleting todo:', error);
-      });
+    // Check if the todo is a locally added one (it might not have a valid API id)
+    const todoToDelete = myData.find(todo => todo.id === id);
+    
+    if (todoToDelete && typeof todoToDelete.id === 'number') {
+      // This is likely an API-fetched todo, so we try to delete it from the API
+      axios.delete(`https://dummyjson.com/todos/${id}`)
+        .then(() => {
+          const updatedTodos = myData.filter(todo => todo.id !== id);
+          setMyData(updatedTodos);
+        })
+        .catch(error => {
+          console.error('Error deleting todo:', error);
+          // If API delete fails, we still remove it from local state
+          const updatedTodos = myData.filter(todo => todo.id !== id);
+          setMyData(updatedTodos);
+        });
+    } else {
+      // This is likely a locally added todo, so we just remove it from local state
+      const updatedTodos = myData.filter(todo => todo.id !== id);
+      setMyData(updatedTodos);
+    }
   };
 
   const handleEdit = (id) => {
