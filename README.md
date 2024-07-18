@@ -36,7 +36,7 @@ A simple ToDo List application that integrates with the DummyJSON API for data h
 
 ```bash
 git clone https://github.com/techwarq/Todo-App.git
-cd Todo-App
+cd todolist
 ```
 
 #### 2. Install dependencies
