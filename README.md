@@ -64,11 +64,7 @@ The app should now be running on http://localhost.
 
 - Click on the 'Filter' dropdown to filter from 'All', 'Completed', 'InComplete'
 
-## Roadmap
 
-- Additional browser support
-
-- Add more integrations
 
 ## Project Structure
 
