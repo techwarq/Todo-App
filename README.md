@@ -4,7 +4,15 @@
 ToDo App
 A simple ToDo List application that integrates with the DummyJSON API for data handling and uses the Flowbite React library for UI components and styling.
 
+## Table of Contents
 
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Challenges Faced](#challenges-faced)
+- [Technologies Used](#technologies-used)
+- [Demo](#demo)
 
 ## Features
 
